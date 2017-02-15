@@ -48,6 +48,7 @@ $config = [
             'rules' => [
                 'category/<id:\d+>/page/<page:\d+>' => 'category/view',  //чпу для страниц товара
                 'category/<id:\d+>' => 'category/view', //чпу для корня сайта
+                'product/<id:\d+>' => 'product/view',
             ],
         ],
 
