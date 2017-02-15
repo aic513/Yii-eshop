@@ -46,7 +46,8 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'category/<id:\d+>' => 'category/view',   //делаем красивый вывод ссылок
+                'category/<id:\d+>/page/<page:\d+>' => 'category/view',  //чпу для страниц товара
+                'category/<id:\d+>' => 'category/view', //чпу для корня сайта
             ],
         ],
 
