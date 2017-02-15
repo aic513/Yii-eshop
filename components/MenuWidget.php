@@ -3,6 +3,7 @@
 namespace app\components;
 use yii\base\Widget;
 use app\models\Category;
+use Yii;
 
 class MenuWidget extends Widget{
 
@@ -20,9 +21,16 @@ class MenuWidget extends Widget{
     }
 
     public function run(){
+        //получаем кеш
+        $menu = Yii::$app->cache->get('menu');
+        if($menu) return $menu;
+
         $this->data = Category::find()->indexBy('id')->asArray()->all();   //получаем массив массивов
         $this->tree = $this->getTree();   //формируем дерево массивов
         $this->menuHtml = $this->getMenuHtml($this->tree);  //собирем меню
+
+        // если кеш пустой,то формируем его
+        Yii::$app->cache->set('menu', $this->menuHtml, 60);
         return $this->menuHtml;
     }
 
@@ -37,7 +45,7 @@ class MenuWidget extends Widget{
         return $tree;
     }
 
-    protected function getMenuHtml($tree){ 
+    protected function getMenuHtml($tree){
         $str = '';
         foreach ($tree as $category) {
             $str .= $this->catToTemplate($category);
