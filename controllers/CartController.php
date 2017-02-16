@@ -29,12 +29,17 @@ class CartController extends AppController{
 
     public function actionAdd(){  //добавление товара в корзину
         $id = Yii::$app->request->get('id');  //записываем id товара
+        $qty = (int)Yii::$app->request->get('qty');
+        $qty = !$qty ? 1 : $qty;
         $product = Product::findOne($id);  //находим товар в бд
         if(empty($product)) return false;
         $session =Yii::$app->session;
         $session->open();  //открываем сессию
         $cart = new Cart();  // создаем объект модели Cart
-        $cart->addToCart($product);
+        $cart->addToCart($product,$qty);
+        if( !Yii::$app->request->isAjax ){
+            return $this->redirect(Yii::$app->request->referrer);
+        }
         $this->layout = false;  //чтобы не подключался шаблон
         return $this->render('cart-modal', compact('session'));  //передаем в шаблон
     }
@@ -64,6 +69,10 @@ class CartController extends AppController{
         $session->open();
         $this->layout = false;
         return $this->render('cart-modal', compact('session'));
+    }
+
+    public function actionView(){
+        return $this->render('view');
     }
 
 
