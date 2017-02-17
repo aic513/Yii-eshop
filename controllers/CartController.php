@@ -83,6 +83,11 @@ class CartController extends AppController{
             if($order->save()){        //если заказ сохранен
                 $this->saveOrderItems($session['cart'], $order->id);
                 Yii::$app->session->setFlash('success', 'Ваш заказ принят. Менеджер вскоре свяжется с Вами.');
+                Yii::$app->mailer->compose('order', ['session' => $session])  //отправляем письмо на почту
+                    ->setFrom(['aic513@mail.ru' => 'yii2.loc'])   //с какого email получается данная почта
+                    ->setTo($order->email)  //email,который пользователь указал при заказе
+                    ->setSubject('Заказ')
+                    ->send();
                 $session->remove('cart');
                 $session->remove('cart.qty');
                 $session->remove('cart.sum');
@@ -99,7 +104,7 @@ class CartController extends AppController{
             $order_items = new OrderItems();
             $order_items->order_id = $order_id;     //id заказа
             $order_items->product_id = $id;     //id товара
-            $order_items->name = $item['name'];   
+            $order_items->name = $item['name'];
             $order_items->price = $item['price'];
             $order_items->qty_item = $item['qty'];
             $order_items->sum_item = $item['qty'] * $item['price'];
