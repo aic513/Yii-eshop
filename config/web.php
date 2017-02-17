@@ -8,6 +8,12 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'ru-RU',
     'defaultRoute' => 'category/index',  //роутер по  умолчанию
+    'modules' => [                            //подключаем модуль
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+            'layout' => 'admin',
+        ],
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -20,6 +26,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+//            'loginUrl' => 'cart/view',   //сюда пересылаем неавторизованного пользователя
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
