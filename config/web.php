@@ -7,11 +7,12 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'ru-RU',
-    'defaultRoute' => 'category/index',  //роутер по  умолчанию
+    'defaultRoute' => 'category/index',  //роутер по  умолчанию для пользовательской части
     'modules' => [                            //подключаем модуль
         'admin' => [
             'class' => 'app\modules\admin\Module',
             'layout' => 'admin',
+            'defaultRoute' => 'order/index',  //роутер по  умолчанию для админки
         ],
     ],
     'components' => [
