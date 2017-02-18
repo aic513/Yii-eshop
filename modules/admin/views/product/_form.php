@@ -1,8 +1,8 @@
 <?php
 
-use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use mihaildev\ckeditor\CKEditor;
 use mihaildev\elfinder\ElFinder;
 mihaildev\elfinder\Assets::noConflict($this);
 
@@ -13,7 +13,7 @@ mihaildev\elfinder\Assets::noConflict($this);
 
 <div class="product-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <div class="form-group field-product-category_id has-success">
         <label class="control-label" for="product-category_id">Родительская категория</label>
@@ -24,25 +24,21 @@ mihaildev\elfinder\Assets::noConflict($this);
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-<!--    --><?// echo $form->field($model, 'content')->widget(CKEditor::className(),[
-//        'editorOptions' => [
-//            'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-//            'inline' => false, //по умолчанию false
-//        ],
-//    ]);
-//    ?>
-    <?
+    <?php
+    ?>
+    <?php
     echo $form->field($model, 'content')->widget(CKEditor::className(), [
-        'editorOptions' => ElFinder::ckeditorOptions('elfinder', [/* Some CKEditor Options */])
+        'editorOptions' => ElFinder::ckeditorOptions('elfinder', [])
     ]);
     ?>
+
     <?= $form->field($model, 'price')->textInput() ?>
 
     <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'image')->fileInput() ?>
 
     <?= $form->field($model, 'hit')->checkbox([ '0', '1', ]) ?>
 
