@@ -5,6 +5,15 @@ use yii\db\ActiveRecord;
 
 class Product extends ActiveRecord{
 
+    public function behaviors()
+    {
+        return [
+            'image' => [
+                'class' => 'rico\yii2images\behaviors\ImageBehave',
+            ]
+        ];
+    }
+
     public static function tableName(){    //определяем таблицу в бд
         return 'product';
     }
